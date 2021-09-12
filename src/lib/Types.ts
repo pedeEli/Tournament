@@ -8,6 +8,7 @@ export interface Tournament {
 
 export interface Settings {
     name: string,
+    state: 'editingContestants' | 'editingGroups' | 'running',
     luckyLoser: boolean,
     winnerPerGroup: number
 }
