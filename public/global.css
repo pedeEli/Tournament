@@ -1,63 +1,65 @@
+@font-face {
+	font-family: Roboto;
+	src: url("roboto/Roboto-Regular.ttf") format("truetype");
+}
+
+*, *::before, *::after {
+	box-sizing: border-box;
+}
+
+:root {
+	--clr-bg: 0, 0%, 20%;
+	--clr-bg-light: 0, 0%, 40%;
+	--clr-txt: 0, 0%, 90%;
+	--clr-red: 0, 90%, 45%;
+
+	--border: .15rem solid hsl(var(--clr-bg-light));
+	--border-radius: 5px;
+}
+
 html, body {
-	position: relative;
-	width: 100%;
 	height: 100%;
 }
-
 body {
-	color: #333;
+	font-family: Roboto, sans-serif;
+	background-color: hsl(var(--clr-bg));
 	margin: 0;
-	padding: 8px;
-	box-sizing: border-box;
-	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
-}
+	padding-top: 2rem;
+	color: hsl(var(--clr-txt));
 
-a {
-	color: rgb(0,100,200);
-	text-decoration: none;
-}
-
-a:hover {
-	text-decoration: underline;
-}
-
-a:visited {
-	color: rgb(0,80,160);
-}
-
-label {
-	display: block;
-}
-
-input, button, select, textarea {
-	font-family: inherit;
-	font-size: inherit;
-	-webkit-padding: 0.4em 0;
-	padding: 0.4em;
-	margin: 0 0 0.5em 0;
-	box-sizing: border-box;
-	border: 1px solid #ccc;
-	border-radius: 2px;
-}
-
-input:disabled {
-	color: #ccc;
+	display: flex;
+	flex-direction: column;
 }
 
 button {
-	color: #333;
-	background-color: #f4f4f4;
-	outline: none;
+	all: unset;
+	padding: .3em;
+	border: var(--border);
+	border-radius: 5px;
+	cursor: pointer;
+	user-select: none;
+}
+button:active {
+	background-color: hsl(var(--clr-bg-light));
 }
 
-button:disabled {
-	color: #999;
+input {
+	all: unset;
+	border: var(--border);
+	border-radius: var(--border-radius);
+	padding: .2rem;
 }
 
-button:not(:disabled):active {
-	background-color: #ddd;
+.card {
+	border: var(--border);
+	border-radius: var(--border-radius);
+	padding: .7rem 2rem;
 }
 
-button:focus {
-	border-color: #666;
+.svg {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 1.5rem;
+	height: 1.5rem;
 }
