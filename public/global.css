@@ -24,11 +24,7 @@ body {
 	font-family: Roboto, sans-serif;
 	background-color: hsl(var(--clr-bg));
 	margin: 0;
-	padding-top: 2rem;
 	color: hsl(var(--clr-txt));
-
-	display: flex;
-	flex-direction: column;
 }
 
 button {

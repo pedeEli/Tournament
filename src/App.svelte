@@ -1,8 +1,11 @@
 <script lang="ts">
     import {loadTournament, toStore} from './lib/util/tournament'
     import EditableText from './lib/components/editable/EditableText.svelte'
+    import MainMenu from './sites/MainMenu.svelte'
+    import {setContext} from 'svelte'
 
     const tournament = loadTournament()
+    setContext('tournament', tournament)
 
     const tournamentStore = toStore(tournament)
     $: localStorage.setItem('tournament', JSON.stringify($tournamentStore))
@@ -12,14 +15,25 @@
 
 </script>
 
-<h1>
-    <EditableText load={() => $settingsStore.name} save={value => settings.name = value}/>
-</h1>
+{#if $settingsStore.state === 'mainMenu'}
+    <MainMenu/>
+{:else}
+    <main>
+        <h1>
+            <EditableText load={() => $settingsStore.name} save={value => settings.name = value}/>
+        </h1>
+    </main>
+{/if}
 
 <style>
     h1 {
         display: flex;
         justify-content: center;
-        margin-top: 0;
+    }
+    main {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: 100%;
     }
 </style>
