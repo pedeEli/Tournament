@@ -1,5 +1,5 @@
 export interface Tournament {
-    setting: Settings,
+    settings: Settings,
     contestants: Contestants,
     matches: Matches,
     groups: Groups,
