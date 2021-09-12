@@ -1,7 +1,7 @@
 <script lang="ts">
     import {loadTournament, toStore} from './lib/util/tournament'
     import EditableText from './lib/components/editable/EditableText.svelte'
-    import MainMenu from './sites/MainMenu.svelte'
+    import MainMenu from './pages/MainMenu.svelte'
     import {setContext} from 'svelte'
 
     const tournament = loadTournament()
