@@ -23,8 +23,8 @@ export const toStore = <T extends object>(value: T): Readable<T>  => {
 const createEmptyTournament = (): Tournament => {
     return {
         settings: {
-            name: 'Tunier',
-            state: 'editingContestants',
+            name: 'Turnier',
+            state: 'mainMenu',
             luckyLoser: false,
             winnerPerGroup: 2
         },
