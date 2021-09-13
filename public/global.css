@@ -49,13 +49,29 @@ input {
 .card {
 	border: var(--border);
 	border-radius: var(--border-radius);
-	padding: .7rem 2rem;
+	padding: .7em max(2em, 2rem);
 }
 
 .svg {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	width: 1.5rem;
-	height: 1.5rem;
+	width: 1em;
+	height: 1em;
+}
+
+.card .underline {
+	position: relative;
+	padding-bottom: .5em;
+	margin-bottom: .5em;
+}
+.card .underline::after {
+	content: '';
+	position: absolute;
+	left: -1em;
+	right: -1em;
+	bottom: 0;
+	height: .2em;
+	background-color: hsl(var(--clr-bg-light));
+	border-radius: 1000000vw;
 }

@@ -3,6 +3,7 @@
     import EditableText from './lib/components/editable/EditableText.svelte'
     import MainMenu from './pages/MainMenu.svelte'
     import {setContext} from 'svelte'
+    import EditContestants from './pages/EditContestants.svelte'
 
     const tournament = loadTournament()
     setContext('tournament', tournament)
@@ -13,15 +14,19 @@
     const settings = tournament.settings
     const settingsStore = toStore(tournament.settings)
 
+    $: state = $settingsStore.state
 </script>
 
-{#if $settingsStore.state === 'mainMenu'}
+{#if state === 'mainMenu'}
     <MainMenu/>
 {:else}
     <main>
         <h1>
             <EditableText load={() => $settingsStore.name} save={value => settings.name = value}/>
         </h1>
+        {#if state === 'editingContestants'}
+            <EditContestants/>
+        {/if}
     </main>
 {/if}
 

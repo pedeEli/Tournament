@@ -11,6 +11,12 @@ export interface Settings {
     state: 'mainMenu' | 'editingContestants' | 'editingGroups' | 'running',
     luckyLoser: boolean,
     winnerPerGroup: number
+    addingContestant: {
+        addingType: 'person' | 'team',
+        teamName: string,
+        personName: string,
+        members: string[]
+    }
 }
 
 export interface Contestants {
@@ -21,11 +27,13 @@ export type Contestant = Person | Team
 
 export interface Person {
     id: string,
+    type: 'person',
     name: string
 }
 
 export interface Team {
     id: string,
+    type: 'team',
     name: string,
     members: string[]
 }

@@ -1,6 +1,7 @@
 import type {Tournament} from '../Types'
 import {proxy, snapshot, subscribe} from 'valtio'
 import type {Readable, Subscriber, Unsubscriber} from 'svelte/store'
+import {v4} from 'uuid'
 
 
 export const loadTournament = () => {
@@ -26,11 +27,25 @@ const createEmptyTournament = (): Tournament => {
             name: 'Turnier',
             state: 'mainMenu',
             luckyLoser: false,
-            winnerPerGroup: 2
+            winnerPerGroup: 2,
+            addingContestant: {
+                addingType: 'team',
+                teamName: '',
+                personName: '',
+                members: []
+            }
         },
         contestants: {},
         matches: {},
         groups: {},
         finales: {},
+    }
+}
+
+export const createId = (ids: string[]) => {
+    while (true) {
+        const id = v4()
+        if (ids.find(_id => _id === id)) continue
+        return id
     }
 }
