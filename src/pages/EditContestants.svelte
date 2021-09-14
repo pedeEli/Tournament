@@ -124,9 +124,8 @@
                             {/each}
                         </div>
                         {#if selectedTeamId === id}
-                            <div class="team">
-                                <EditableList list={contestants[selectedTeamId].members}
-                                              bind:heading={$contestantsStore[selectedTeamId].name}/>
+                            <div class="selected-team">
+                                <EditableList list={contestants[selectedTeamId].members} bind:heading={$contestantsStore[selectedTeamId].name}/>
                             </div>
                         {/if}
                     {/each}
@@ -208,11 +207,17 @@
     .team {
         margin-top: .7rem;
         margin-right: .7rem;
+        cursor: pointer;
     }
     .team-name button {
         margin-left: .4rem
     }
     .persons + .teams {
         margin-left: 2rem;
+    }
+    .selected-team {
+        position: fixed;
+        top: 5rem;
+        right: 5rem;
     }
 </style>
