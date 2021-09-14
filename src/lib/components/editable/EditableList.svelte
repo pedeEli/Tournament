@@ -46,7 +46,7 @@
         return (value: string) => {
             if (!value) return removeItem(index)
             value = capitalizeWords(value)
-            if (value === list[index]) return
+            if (value === $listStore[index]) return
             if ($listStore.find(item => item === value))
                 return popup(`${value} ist schon im Team`)
             list[index] = value

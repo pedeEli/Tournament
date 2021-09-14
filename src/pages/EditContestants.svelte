@@ -7,6 +7,7 @@
     import {createId, toStore} from '../lib/util/tournament'
     import {groupByType} from '../lib/util/contestants'
     import {clickOutside} from '../lib/util/actions'
+    import Popup from '../lib/components/Popup.svelte'
 
 
     const tournament = getContext<Tournament>('tournament')
@@ -22,7 +23,10 @@
 
     const addContestant = () => {
         const id = createId(Object.keys($contestantsStore))
-        contestants[id] = createContestant(id)
+        const contestant = createContestant(id)
+        if (Object.values($contestantsStore).find(({name}) => name === contestant.name))
+            return popup(`${contestant.name} existiert bereits`)
+        contestants[id] = contestant
 
         personName = ''
         teamName = ''
@@ -53,7 +57,12 @@
     }
 
     const renameContestant = (id: string) => {
-        return value => contestants[id].name = value
+        return value => {
+            if (value === $contestantsStore[id].name) return
+            if (Object.values($contestantsStore).find(({name}) => name === value))
+                return popup(`${value} existiert bereits`)
+            contestants[id].name = value
+        }
     }
 
     const getContestantName = (id: string) => {
@@ -71,7 +80,10 @@
 
     let selectedTeamId: string | false = false
 
+    let popup: (text: string) => void
 </script>
+
+<Popup bind:popup/>
 
 <main>
     <h2>Füge Team oder Person hinzu</h2>
