@@ -1,9 +1,11 @@
 <script lang="ts">
-    import Add from "../svg/Add.svelte"
-    import {clickOutside} from "../../util/actions"
-    import EditableText from "./EditableText.svelte"
-    import Minus from "../svg/Minus.svelte"
+    import Add from '../svg/Add.svelte'
+    import {clickOutside} from '../../util/actions'
+    import EditableText from './EditableText.svelte'
+    import Minus from '../svg/Minus.svelte'
     import {toStore} from '../../util/tournament'
+    import Popup from '../Popup.svelte'
+    import {capitalizeWords} from '../../util/contestants'
 
     export let heading = 'Liste'
 
@@ -24,11 +26,11 @@
         if (key === 'Escape') return cancelAdding()
     }
 
-    let addButtonElement: HTMLButtonElement
     const addItem = () => {
-        isAdding = false
-        addButtonElement.focus()
         if (!itemToAdd) return
+        itemToAdd = capitalizeWords(itemToAdd)
+        if ($listStore.find(item => item === itemToAdd))
+            return popup(`${itemToAdd} ist schon im Team`)
         list.push(itemToAdd)
     }
 
@@ -43,15 +45,23 @@
     const renameItem = (index: number) => {
         return (value: string) => {
             if (!value) return removeItem(index)
+            value = capitalizeWords(value)
+            if (value === list[index]) return
+            if ($listStore.find(item => item === value))
+                return popup(`${value} ist schon im Team`)
             list[index] = value
         }
     }
+
+    let popup: (text: string) => void
 </script>
+
+<Popup bind:popup />
 
 <section class="list card">
     <header class="underline">
         <h3>{heading}</h3>
-        <button bind:this={addButtonElement} class="svg" on:click={startAdding}><Add/></button>
+        <button class="svg" on:click={startAdding}><Add/></button>
     </header>
     {#if isAdding}
         <input use:clickOutside on:clickoutside={cancelAdding} bind:this={inputElement} type="text" on:keydown={handleKeyDown} bind:value={itemToAdd}>

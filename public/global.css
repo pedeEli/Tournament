@@ -49,7 +49,7 @@ input {
 .card {
 	border: var(--border);
 	border-radius: var(--border-radius);
-	padding: .7em max(2em, 2rem);
+	padding: .7em min(2em, 2rem);
 }
 
 .svg {

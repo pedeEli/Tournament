@@ -16,3 +16,7 @@ export const groupByType = (contestants: Contestants): GroupedContestants => {
     }
     return groups
 }
+
+export const capitalizeWords = (str: string) => {
+    return str.toLowerCase().split(' ').map(word => word[0].toUpperCase() + word.substring(1)).join(' ')
+}
