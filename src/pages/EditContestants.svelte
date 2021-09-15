@@ -106,7 +106,7 @@
     {/if}
     <section class="action-buttons">
         <button class="action-button" on:click={addContestant}>Hinzufügen</button>
-        <button class="action-button" >Gruppen Konfigurieren</button>
+        <button class="action-button" on:click={() => tournament.settings.state = 'editingGroups'}>Gruppen Bearbeiten</button>
     </section>
 
     <div class="contestants">

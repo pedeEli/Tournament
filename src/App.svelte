@@ -4,6 +4,7 @@
     import MainMenu from './pages/MainMenu.svelte'
     import {setContext} from 'svelte'
     import EditContestants from './pages/EditContestants.svelte'
+    import EditGroups from './pages/EditGroups.svelte'
 
     const tournament = loadTournament()
     setContext('tournament', tournament)
@@ -26,6 +27,8 @@
         </h1>
         {#if state === 'editingContestants'}
             <EditContestants/>
+        {:else if state === 'editingGroups'}
+            <EditGroups/>
         {/if}
     </main>
 {/if}
