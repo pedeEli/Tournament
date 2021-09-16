@@ -15,11 +15,7 @@
 
     $: luckyLoserPossible = Math.log2($settingsStore.winnerPerGroup * Object.keys($groupsStore).length) % 1 !== 0
 
-    const exitTournament = () => {
-    }
     const assignRandom = () => {
-    }
-    const startTournament = () => {
     }
 
     let assignedContestants: string[] = Object.values(groups).map(group => group.members).flat(1)
@@ -81,9 +77,9 @@
         {/if}
     </section>
     <section class="buttons">
-        <button on:click={exitTournament}>Teams Bearbeiten</button>
+        <button on:click={() => tournament.settings.state = 'editingContestants'}>Teams Bearbeiten</button>
         <button on:click={assignRandom}>Zufällig</button>
-        <button on:click={startTournament}>Tunier Starten</button>
+        <button on:click={() => {}}>Tunier Starten</button>
     </section>
     <section class="selection">
         <div class="contestants card">

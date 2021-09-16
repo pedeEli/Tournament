@@ -52,8 +52,13 @@
     const removeContestant = (id: string) => {
         return () => {
             if (selectedTeamId === id) selectedTeamId = false
+            removeContestantFromGroups(id)
             delete contestants[id]
         }
+    }
+
+    const removeContestantFromGroups = (id: string) => {
+        Object.values(tournament.groups).forEach(group => group.members = group.members.filter(_id => _id !== id))
     }
 
     const renameContestant = (id: string) => {
