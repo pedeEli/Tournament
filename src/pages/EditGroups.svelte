@@ -17,6 +17,27 @@
     $: luckyLoserPossible = Math.log2($settingsStore.winnerPerGroup * keys($groupsStore).length) % 1 !== 0
 
     const assignRandom = () => {
+        const groupsList = values(groups)
+        groupsList.forEach(group => group.members = [])
+        assignedContestants = []
+
+        let index = 0
+        while (assignedContestants.length < contestantsList.length) {
+            const group = groupsList[index]
+            const contestant = getRandomContestant()
+            group.members.push(contestant)
+            assignedContestants = [...assignedContestants, contestant]
+            index = (index + 1) % groupsList.length
+        }
+    }
+
+    const getRandomContestant = () => {
+        while (true) {
+            const index = Math.floor(Math.random() * contestantsList.length)
+            const {id} = contestantsList[index]
+            if (assignedContestants.find(_id => _id === id)) continue
+            return id
+        }
     }
 
     let assignedContestants: string[] = getAssignedContestants(values(groups))
