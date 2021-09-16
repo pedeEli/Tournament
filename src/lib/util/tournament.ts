@@ -49,3 +49,7 @@ export const createId = (ids: string[]) => {
         return id
     }
 }
+
+export const values = <T>(obj: {[id: string]: T}) => Object.values(obj)
+
+export const keys = (obj: object) => Object.keys(obj)

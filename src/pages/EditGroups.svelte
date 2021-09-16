@@ -1,33 +1,35 @@
 <script lang="ts">
     import {getContext} from 'svelte'
     import type {Contestant, Tournament} from '../lib/Types'
-    import {createId, toStore} from '../lib/util/tournament'
+    import {createId, keys, toStore, values} from '../lib/util/tournament'
     import Checkbox from '../lib/components/Checkbox.svelte'
     import Add from '../lib/components/svg/Add.svelte'
     import Minus from '../lib/components/svg/Minus.svelte'
+    import {getAssignedContestants} from '../lib/util/groups'
 
     const tournament = getContext<Tournament>('tournament')
 
     const {settings, contestants, groups} = tournament
-    const contestantsList: Contestant[] = Object.values(contestants)
+    const contestantsList: Contestant[] = values(contestants)
     const groupsStore = toStore(groups)
     const settingsStore = toStore(settings)
 
-    $: luckyLoserPossible = Math.log2($settingsStore.winnerPerGroup * Object.keys($groupsStore).length) % 1 !== 0
+    $: luckyLoserPossible = Math.log2($settingsStore.winnerPerGroup * keys($groupsStore).length) % 1 !== 0
 
     const assignRandom = () => {
     }
 
-    let assignedContestants: string[] = Object.values(groups).map(group => group.members).flat(1)
+    let assignedContestants: string[] = getAssignedContestants(values(groups))
     let grabbedContestant: string | false = false
     let top: number
     let left: number
 
     const addGroup = () => {
-        const id = createId(Object.keys($groupsStore))
+        const ids = keys($groupsStore)
+        const id = createId(ids)
         groups[id] = {
             id,
-            name: `Gruppe ${Object.keys($groupsStore).length + 1}`,
+            name: `Gruppe ${ids.length + 1}`,
             matches: [],
             members: []
         }
@@ -44,7 +46,7 @@
         renameAllGroups()
     }
     const renameAllGroups = () => {
-        Object.values(groups).forEach((group, index) => group.name = `Gruppe ${index + 1}`)
+        values(groups).forEach((group, index) => group.name = `Gruppe ${index + 1}`)
     }
     const removeContestant = (id: string, memberIndex: number) => () => {
         const contestantId = groups[id].members.splice(memberIndex, 1)[0]
