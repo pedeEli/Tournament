@@ -6,10 +6,10 @@
 </script>
 
 <main>
-    <h1>Turnier</h1>
+    <h1>Tournament</h1>
     <section>
-        <button on:click={() => tournament.settings.state = 'editingContestants'}>Neu</button>
-        <button>Laden</button>
+        <button on:click={() => tournament.settings.state = 'editingContestants'}>New</button>
+        <button>Load</button>
     </section>
 </main>
 

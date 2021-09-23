@@ -29,11 +29,11 @@
         const contestant = createContestant(id)
 
         if (contestant.name === '')
-            return popup('Name kann nicht leer sein')
+            return popup('Name cannot be empty')
         if (values(contestants).find(({name}) => name === contestant.name))
-            return popup(`${contestant.name} existiert bereits`)
+            return popup(`${contestant.name} already exists`)
         if (contestant.type === 'team' && contestant.members.length < 2)
-            return popup('Es müssen mindestens 2 Mitglieder in der Gruppe sein')
+            return popup('There must be at least 2 members in a group')
 
         contestants[id] = contestant
 
@@ -75,7 +75,7 @@
         return value => {
             if (value === contestants[id].name) return
             if (values(contestants).find(({name}) => name === value))
-                return popup(`${value} existiert bereits`)
+                return popup(`${value} already exists`)
             contestants[id].name = value
         }
     }
@@ -101,7 +101,7 @@
 <Popup bind:popup/>
 
 <main>
-    <h2>Füge Team oder Person hinzu</h2>
+    <h2>Add a team or single person</h2>
     <section class="type-buttons">
         <button class:active={addingType === 'team'} on:click={() => addingType = 'team'}>Team</button>
         <button class:active={addingType === 'person'} on:click={() => addingType = 'person'}>Person</button>
@@ -121,14 +121,14 @@
         </div>
     {/if}
     <section class="action-buttons">
-        <button class="action-button" on:click={addContestant}>Hinzufügen</button>
-        <button class="action-button" on:click={() => tournament.settings.state = 'editingGroups'}>Gruppen Bearbeiten</button>
+        <button class="action-button" on:click={addContestant}>Add</button>
+        <button class="action-button" on:click={() => tournament.settings.state = 'editingGroups'}>Edit Groups</button>
     </section>
 
     <div class="contestants">
         {#if persons}
             <section class="persons">
-                <h2>Personen</h2>
+                <h2>Persons</h2>
                 {#each persons as {id} (id)}
                     <div class="person">
                         <button on:click={removeContestant(id)} class="svg small-svg"><Minus/></button>

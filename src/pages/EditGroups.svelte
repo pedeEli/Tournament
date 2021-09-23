@@ -50,7 +50,7 @@
         const id = createId(ids)
         groups[id] = {
             id,
-            name: `Gruppe ${ids.length + 1}`,
+            name: `Group ${ids.length + 1}`,
             matches: [],
             members: []
         }
@@ -67,7 +67,7 @@
         renameAllGroups()
     }
     const renameAllGroups = () => {
-        values(groups).forEach((group, index) => group.name = `Gruppe ${index + 1}`)
+        values(groups).forEach((group, index) => group.name = `Group ${index + 1}`)
     }
     const removeContestant = (id: string, memberIndex: number) => () => {
         const contestantId = groups[id].members.splice(memberIndex, 1)[0]
@@ -89,10 +89,10 @@
 <svelte:body on:click={() => grabbedContestant = false} on:mousemove={handleMouseMove}/>
 
 <main>
-    <h2>Gruppen Konfigurieren</h2>
-    <div>Es sind insgesamt {contestantsList.length} Teilnehmer</div>
+    <h2>Configure groups</h2>
+    <div>There ar in total {contestantsList.length} contestants</div>
     <section class="inputs">
-        <label for="winner-per-group">Gewinner pro Gruppe</label>
+        <label for="winner-per-group">Winner per group</label>
         <input id="winner-per-group" type="text" bind:value={settings.winnerPerGroup}>
         {#if luckyLoserPossible}
             <div class="label">Lucky Loser</div>
@@ -100,20 +100,20 @@
         {/if}
     </section>
     <section class="buttons">
-        <button on:click={() => tournament.settings.state = 'editingContestants'}>Teams Bearbeiten</button>
-        <button on:click={assignRandom}>Zufällig</button>
-        <button on:click={() => {}}>Tunier Starten</button>
+        <button on:click={() => tournament.settings.state = 'editingContestants'}>Edit teams</button>
+        <button on:click={assignRandom}>Randomize</button>
+        <button on:click={() => {}}>Start tournament</button>
     </section>
     <section class="selection">
         <div class="contestants card">
-            <header>Teilnehmer</header>
+            <header>Contestants</header>
             {#each contestantsList.filter(({id}) => !assignedContestants.find(contestant => contestant === id)) as {id, name} (id)}
                 <div on:mousedown={startDrag(id)} class="contestant">{name}</div>
             {/each}
         </div>
         <div class="groups card">
             <header>
-                <span>Gruppen</span>
+                <span>Groups</span>
                 <button on:click={addGroup} class="svg"><Add/></button>
             </header>
             {#each Object.values($groupsStore) as {id, name, members} (id)}
