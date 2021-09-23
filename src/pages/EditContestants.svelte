@@ -5,7 +5,7 @@
     import {getContext} from 'svelte'
     import type {Contestant, Tournament} from '../lib/Types'
     import {createId, keys, toStore, values} from '../lib/util/tournament'
-    import {groupByType} from '../lib/util/contestants'
+    import {capitalizeWords, groupByType} from '../lib/util/contestants'
     import {clickOutside} from '../lib/util/actions'
     import Popup from '../lib/components/Popup.svelte'
 
@@ -22,26 +22,36 @@
     $: addingContestant.personName = personName
 
     const addContestant = () => {
+        teamName = teamName.trim()
+        personName = personName.trim()
+
         const id = createId(keys(contestants))
         const contestant = createContestant(id)
+
+        if (contestant.name === '')
+            return popup('Name kann nicht leer sein')
         if (values(contestants).find(({name}) => name === contestant.name))
             return popup(`${contestant.name} existiert bereits`)
+        if (contestant.type === 'team' && contestant.members.length < 2)
+            return popup('Es müssen mindestens 2 Mitglieder in der Gruppe sein')
+
         contestants[id] = contestant
 
-        personName = ''
         teamName = ''
+        personName = ''
         addingContestant.members.splice(0, addingContestant.members.length)
     }
     const createContestant = (id: string): Contestant => {
         if (addingType === 'team') {
-            const copiedMembers = Array(members.length).fill(null).map((_, index) => members[index])
+            if (teamName !== '') teamName = capitalizeWords(teamName)
             return {
                 id,
                 type: 'team',
                 name: teamName,
-                members: copiedMembers
+                members: [...members]
             }
         }
+        if (personName !== '') personName = capitalizeWords(personName)
         return {
             id,
             type: 'person',
