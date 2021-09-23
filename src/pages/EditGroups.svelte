@@ -18,6 +18,7 @@
 
     const assignRandom = () => {
         const groupsList = values(groups)
+        if (!groupsList.length) return
         groupsList.forEach(group => group.members = [])
         assignedContestants = []
 
