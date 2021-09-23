@@ -4,7 +4,7 @@
     import EditableText from '../lib/components/editable/EditableText.svelte'
     import {getContext} from 'svelte'
     import type {Contestant, Tournament} from '../lib/Types'
-    import {createId, toStore} from '../lib/util/tournament'
+    import {createId, keys, toStore, values} from '../lib/util/tournament'
     import {groupByType} from '../lib/util/contestants'
     import {clickOutside} from '../lib/util/actions'
     import Popup from '../lib/components/Popup.svelte'
@@ -22,9 +22,9 @@
     $: addingContestant.personName = personName
 
     const addContestant = () => {
-        const id = createId(Object.keys($contestantsStore))
+        const id = createId(keys(contestants))
         const contestant = createContestant(id)
-        if (Object.values($contestantsStore).find(({name}) => name === contestant.name))
+        if (values(contestants).find(({name}) => name === contestant.name))
             return popup(`${contestant.name} existiert bereits`)
         contestants[id] = contestant
 
@@ -58,20 +58,20 @@
     }
 
     const removeContestantFromGroups = (id: string) => {
-        Object.values(tournament.groups).forEach(group => group.members = group.members.filter(_id => _id !== id))
+        values(tournament.groups).forEach(group => group.members = group.members.filter(_id => _id !== id))
     }
 
     const renameContestant = (id: string) => {
         return value => {
-            if (value === $contestantsStore[id].name) return
-            if (Object.values($contestantsStore).find(({name}) => name === value))
+            if (value === contestants[id].name) return
+            if (values(contestants).find(({name}) => name === value))
                 return popup(`${value} existiert bereits`)
             contestants[id].name = value
         }
     }
 
     const getContestantName = (id: string) => {
-        return () => $contestantsStore[id].name
+        return () => contestants[id].name
     }
 
     const handleKeyDownPerson = ({key}: KeyboardEvent) => {
@@ -97,11 +97,12 @@
         <button class:active={addingType === 'person'} on:click={() => addingType = 'person'}>Person</button>
     </section>
     <section class="name">
-        <label for="name">Name</label>
         {#if addingType === 'team'}
-            <input id="name" type="text" bind:value={teamName}>
+            <label for="team-name">Name</label>
+            <input id="team-name" type="text" bind:value={teamName}>
         {:else}
-            <input id="name" type="text" on:keydown={handleKeyDownPerson} bind:value={personName}>
+            <label for="person-name">Name</label>
+            <input id="person-name" type="text" on:keydown={handleKeyDownPerson} bind:value={personName}>
         {/if}
     </section>
     {#if addingType === 'team'}
