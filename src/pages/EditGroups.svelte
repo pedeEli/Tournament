@@ -101,9 +101,7 @@
         {/if}
     </section>
     <section class="buttons">
-        <button on:click={() => tournament.settings.state = 'editingContestants'}>Edit teams</button>
         <button on:click={assignRandom}>Randomize</button>
-        <button on:click={() => {}}>Start tournament</button>
     </section>
     <section class="selection">
         <div class="contestants card">

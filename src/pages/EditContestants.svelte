@@ -122,7 +122,6 @@
     {/if}
     <section class="action-buttons">
         <button class="action-button" on:click={addContestant}>Add</button>
-        <button class="action-button" on:click={() => tournament.settings.state = 'editingGroups'}>Edit Groups</button>
     </section>
 
     <div class="contestants">
