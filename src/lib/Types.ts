@@ -9,6 +9,7 @@ export interface Tournament {
 export interface Settings {
     name: string,
     state: 'mainMenu' | 'editingContestants' | 'editingGroups' | 'running',
+    haveGroups: boolean,
     luckyLoser: boolean,
     winnerPerGroup: number
     addingContestant: {

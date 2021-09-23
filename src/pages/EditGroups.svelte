@@ -90,47 +90,52 @@
 <svelte:body on:click={() => grabbedContestant = false} on:mousemove={handleMouseMove}/>
 
 <main>
-    <h2>Configure groups</h2>
-    <div>There ar in total {contestantsList.length} contestants</div>
-    <section class="inputs">
-        <label for="winner-per-group">Winner per group</label>
-        <input id="winner-per-group" type="text" bind:value={settings.winnerPerGroup}>
-        {#if luckyLoserPossible}
-            <div class="label">Lucky Loser</div>
-            <Checkbox bind:value={settings.luckyLoser}/>
-        {/if}
-    </section>
-    <section class="buttons">
-        <button on:click={assignRandom}>Randomize</button>
-    </section>
-    <section class="selection">
-        <div class="contestants card">
-            <header>Contestants</header>
-            {#each contestantsList.filter(({id}) => !assignedContestants.find(contestant => contestant === id)) as {id, name} (id)}
-                <div on:mousedown={startDrag(id)} class="contestant">{name}</div>
-            {/each}
-        </div>
-        <div class="groups card">
-            <header>
-                <span>Groups</span>
-                <button on:click={addGroup} class="svg"><Add/></button>
-            </header>
-            {#each Object.values($groupsStore) as {id, name, members} (id)}
-                <div on:mouseup={handleDrop(id)} class="group card">
-                    <header class="group-header underline">
-                        <span>{name}</span>
-                        <button on:click={removeGroup(id)} class="svg"><Minus/></button>
-                    </header>
-                    {#each members as memberId, memberIndex}
-                        <div class="contestant">
-                            <span>{contestants[memberId].name}</span>
-                            <button on:click={removeContestant(id, memberIndex)} class="svg"><Minus/></button>
-                        </div>
-                    {/each}
-                </div>
-            {/each}
-        </div>
-    </section>
+    <header>
+        <h2>Configure groups</h2>
+        <Checkbox bind:value={settings.haveGroups} />
+    </header>
+    {#if $settingsStore.haveGroups}
+        <div>There ar in total {contestantsList.length} contestants</div>
+        <section class="inputs">
+            <label for="winner-per-group">Winner per group</label>
+            <input id="winner-per-group" type="text" bind:value={settings.winnerPerGroup}>
+            {#if luckyLoserPossible}
+                <div class="label">Lucky Loser</div>
+                <Checkbox bind:value={settings.luckyLoser}/>
+            {/if}
+        </section>
+        <section class="buttons">
+            <button on:click={assignRandom}>Randomize</button>
+        </section>
+        <section class="selection">
+            <div class="contestants card">
+                <header>Contestants</header>
+                {#each contestantsList.filter(({id}) => !assignedContestants.find(contestant => contestant === id)) as {id, name} (id)}
+                    <div on:mousedown={startDrag(id)} class="contestant">{name}</div>
+                {/each}
+            </div>
+            <div class="groups card">
+                <header>
+                    <span>Groups</span>
+                    <button on:click={addGroup} class="svg"><Add/></button>
+                </header>
+                {#each Object.values($groupsStore) as {id, name, members} (id)}
+                    <div on:mouseup={handleDrop(id)} class="group card">
+                        <header class="group-header underline">
+                            <span>{name}</span>
+                            <button on:click={removeGroup(id)} class="svg"><Minus/></button>
+                        </header>
+                        {#each members as memberId, memberIndex}
+                            <div class="contestant">
+                                <span>{contestants[memberId].name}</span>
+                                <button on:click={removeContestant(id, memberIndex)} class="svg"><Minus/></button>
+                            </div>
+                        {/each}
+                    </div>
+                {/each}
+            </div>
+        </section>
+    {/if}
 </main>
 
 {#if grabbedContestant}
@@ -140,6 +145,14 @@
 {/if}
 
 <style>
+    header {
+        display: flex;
+        justify-content: center;
+    }
+    h2 {
+        margin-right: 1rem;
+        transform: translateY(-.1em);
+    }
     main {
         display: flex;
         flex-direction: column;

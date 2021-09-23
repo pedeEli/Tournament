@@ -26,6 +26,7 @@ const createEmptyTournament = (): Tournament => {
         settings: {
             name: 'Turnier',
             state: 'mainMenu',
+            haveGroups: false,
             luckyLoser: false,
             winnerPerGroup: 2,
             addingContestant: {
