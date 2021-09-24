@@ -95,7 +95,7 @@
         <Checkbox bind:value={settings.haveGroups} />
     </header>
     {#if $settingsStore.haveGroups}
-        <div>There ar in total {contestantsList.length} contestants</div>
+        <div class="contestant-count">There ar in total {contestantsList.length} contestants</div>
         <section class="inputs">
             <label for="winner-per-group">Winner per group</label>
             <input id="winner-per-group" type="text" bind:value={settings.winnerPerGroup}>
@@ -103,9 +103,7 @@
                 <div class="label">Lucky Loser</div>
                 <Checkbox bind:value={settings.luckyLoser}/>
             {/if}
-        </section>
-        <section class="buttons">
-            <button on:click={assignRandom}>Randomize</button>
+            <button class="randomize" on:click={assignRandom}>Randomize</button>
         </section>
         <section class="selection">
             <div class="contestants card">
@@ -153,6 +151,9 @@
         margin-right: 1rem;
         transform: translateY(-.1em);
     }
+    .contestant-count {
+        margin-top: 1rem;
+    }
     main {
         display: flex;
         flex-direction: column;
@@ -161,7 +162,7 @@
     .inputs {
         display: grid;
         grid-template-columns: auto auto;
-        grid-template-rows: 2.5rem 2.5rem;
+        grid-template-rows: 2.5rem 2.5rem 2.5rem;
         grid-column-gap: 1rem;
         align-items: center;
         margin-top: 1rem;
@@ -169,12 +170,13 @@
     .inputs label, .inputs div {
         justify-self: right;
     }
-    .buttons {
-        margin-top: .5rem;
+    .randomize {
+        grid-column: 1 / 3;
+        justify-self: center;
     }
     .selection {
         display: flex;
-        margin-top: 1rem;
+        margin-top: 1.5rem;
         align-items: flex-start;
     }
     .contestants {

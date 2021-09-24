@@ -27,6 +27,11 @@ body {
 	color: hsl(var(--clr-txt));
 }
 
+h2 {
+	text-align: center;
+	margin: 0;
+}
+
 button {
 	all: unset;
 	padding: .3em;

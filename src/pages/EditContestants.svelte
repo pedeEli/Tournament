@@ -8,6 +8,7 @@
     import {capitalizeWords, groupByType} from '../lib/util/contestants'
     import {clickOutside} from '../lib/util/actions'
     import Popup from '../lib/components/Popup.svelte'
+    import Add from '../lib/components/svg/Add.svelte'
 
 
     const tournament = getContext<Tournament>('tournament')
@@ -102,9 +103,10 @@
 
 <main>
     <h2>Add a team or single person</h2>
-    <section class="type-buttons">
+    <section class="buttons">
         <button class:active={addingType === 'team'} on:click={() => addingType = 'team'}>Team</button>
         <button class:active={addingType === 'person'} on:click={() => addingType = 'person'}>Person</button>
+        <button class="svg" on:click={addContestant}><Add/></button>
     </section>
     <section class="name">
         {#if addingType === 'team'}
@@ -120,9 +122,6 @@
             <EditableList list={members} heading="Team Mitglieder"/>
         </div>
     {/if}
-    <section class="action-buttons">
-        <button class="action-button" on:click={addContestant}>Add</button>
-    </section>
 
     <div class="contestants">
         {#if persons}
@@ -168,15 +167,16 @@
         flex-direction: column;
         align-items: center;
     }
-    .type-buttons, .action-buttons {
-        font-size: 1.5rem;
+    .buttons {
         display: flex;
         align-items: center;
-        margin: .6rem;
+        margin-top: 1rem;
     }
-    .type-buttons button:last-child,
-    .action-buttons button:last-child {
-        margin-left: 1rem;
+    .buttons button {
+        margin: 0 .5rem;
+    }
+    .name {
+        margin-top: 1rem;
     }
     .active {
         background-color: hsl(var(--clr-bg-light));
@@ -188,16 +188,6 @@
         margin-top: 1rem;
         min-width: 35ch;
         font-size: 1.3rem;
-    }
-    .action-buttons {
-        margin-top: 1rem;
-    }
-    .action-button {
-        font-size: 1.7rem;
-    }
-    h2 {
-        text-align: center;
-        margin: 0;
     }
     .contestants {
         margin: 2rem;
