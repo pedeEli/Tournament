@@ -95,7 +95,7 @@
         <Checkbox bind:value={settings.haveGroups} />
     </header>
     {#if $settingsStore.haveGroups}
-        <div class="contestant-count">There ar in total {contestantsList.length} contestants</div>
+        <div class="contestant-count">There are in total {contestantsList.length} contestants</div>
         <section class="inputs">
             <label for="winner-per-group">Winner per group</label>
             <input id="winner-per-group" type="text" bind:value={settings.winnerPerGroup}>
