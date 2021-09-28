@@ -5,11 +5,16 @@
     import Checkbox from '../lib/components/Checkbox.svelte'
     import Add from '../lib/components/svg/Add.svelte'
     import Minus from '../lib/components/svg/Minus.svelte'
-    import {getAssignedContestants} from '../lib/util/groups'
+    import {
+        createAndAssignMatches,
+        getAssignedContestants, reassignMatchesAfterRandomize,
+        removeMatches,
+        removeMatchesOfContestant
+    } from '../lib/util/groups'
 
     const tournament = getContext<Tournament>('tournament')
 
-    const {settings, contestants, groups} = tournament
+    const {settings, contestants, groups, matches} = tournament
     const contestantsList: Contestant[] = values(contestants)
     const groupsStore = toStore(groups)
     const settingsStore = toStore(settings)
@@ -30,6 +35,8 @@
             assignedContestants = [...assignedContestants, contestant]
             index = (index + 1) % groupsList.length
         }
+
+        reassignMatchesAfterRandomize(groupsList, matches)
     }
 
     const getRandomContestant = () => {
@@ -61,9 +68,11 @@
         groups[id].members.push(grabbedContestant)
         assignedContestants = [...assignedContestants, grabbedContestant]
         grabbedContestant = false
+        createAndAssignMatches(groups[id], matches)
     }
     const removeGroup = (id: string) => () => {
         groups[id].members.forEach(member => assignedContestants = assignedContestants.filter(contestant => contestant !== member))
+        removeMatches(groups[id], matches)
         delete groups[id]
         renameAllGroups()
     }
@@ -73,6 +82,7 @@
     const removeContestant = (id: string, memberIndex: number) => () => {
         const contestantId = groups[id].members.splice(memberIndex, 1)[0]
         assignedContestants = assignedContestants.filter(id => id !== contestantId)
+        removeMatchesOfContestant(contestantId, groups[id], matches)
     }
 
     const startDrag = (id: string) => ({clientX, clientY}: MouseEvent) => {
