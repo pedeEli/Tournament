@@ -9,6 +9,7 @@
     import {clickOutside} from '../lib/util/actions'
     import Popup from '../lib/components/Popup.svelte'
     import Add from '../lib/components/svg/Add.svelte'
+    import {removeMatchesOfContestant} from '../lib/util/groups'
 
 
     const tournament = getContext<Tournament>('tournament')
@@ -69,7 +70,10 @@
     }
 
     const removeContestantFromGroups = (id: string) => {
-        values(tournament.groups).forEach(group => group.members = group.members.filter(_id => _id !== id))
+        values(tournament.groups).forEach(group => {
+            group.members = group.members.filter(_id => _id !== id)
+            removeMatchesOfContestant(id, group, tournament.matches)
+        })
     }
 
     const renameContestant = (id: string) => {
