@@ -32,6 +32,7 @@
         if ($listStore.find(item => item === itemToAdd))
             return popup(`${itemToAdd} ist schon im Team`)
         list.push(itemToAdd)
+        inputElement.select()
     }
 
     const cancelAdding = () => {
