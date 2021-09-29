@@ -127,7 +127,7 @@
                     <span>Groups</span>
                     <button on:click={addGroup} class="svg"><Add/></button>
                 </header>
-                {#each Object.values($groupsStore) as {id, name, members} (id)}
+                {#each values($groupsStore) as {id, name, members} (id)}
                     <div on:mouseup={handleDrop(id)} class="group card">
                         <header class="group-header underline">
                             <span>{name}</span>

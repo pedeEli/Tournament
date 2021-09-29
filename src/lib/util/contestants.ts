@@ -1,4 +1,5 @@
 import type {Contestant, Contestants} from '../Types'
+import {values} from './tournament'
 
 type ContestantTypes = `${Contestant['type']}s`
 
@@ -8,7 +9,7 @@ type GroupedContestants = {
 
 export const groupByType = (contestants: Contestants): GroupedContestants => {
     const groups: GroupedContestants = {}
-    for (const contestant of Object.values(contestants)) {
+    for (const contestant of values(contestants)) {
         let index: ContestantTypes = `${contestant.type}s`
         const g = groups[index] ?? []
         g.push(contestant)
