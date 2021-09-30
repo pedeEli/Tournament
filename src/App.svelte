@@ -6,6 +6,7 @@
     import EditContestants from './pages/EditContestants.svelte'
     import EditGroups from './pages/EditGroups.svelte'
     import type {Tournament} from './lib/Types'
+    import TournamentElement from './pages/tournament/Tournament.svelte'
 
     const tournament = loadTournament()
     setContext('tournament', tournament)
@@ -43,6 +44,8 @@
             <EditContestants/>
         {:else if state === 'editingGroups'}
             <EditGroups/>
+        {:else if state === 'running'}
+            <TournamentElement/>
         {/if}
     </main>
 {/if}

@@ -42,3 +42,24 @@ export const doubleClick = (node: Node) => {
         destroy: () => node.removeEventListener('click', handleClick)
     }
 }
+
+export const mouseDownOutside = (node: Node, outside: Node = document) => {
+    const handleClick = event => {
+        if (node && !node.contains(event.target) && !event.defaultPrevented) {
+            node.dispatchEvent(
+                new CustomEvent('mousedownoutside')
+            )
+        }
+    }
+
+    outside.addEventListener('mousedown', handleClick, true)
+
+    return {
+        destroy: () => outside.removeEventListener('mousedown', handleClick, true),
+        update: (newOutside) => {
+            outside.removeEventListener('mousedown', handleClick, true)
+            outside = newOutside
+            outside.addEventListener('mousedown', handleClick, true)
+        }
+    }
+}
